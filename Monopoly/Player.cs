@@ -249,6 +249,10 @@ namespace Monopoly
                     (this.position as Company).owner = "Bank";
                 }
             }
+            else if((this.position).type == "Case")
+            {
+                Console.WriteLine("{0} you cannot sell this case\n",this.name);
+            }
 
         }
 
@@ -438,6 +442,7 @@ namespace Monopoly
             this.state = 13;
             this.Notify(0);
             this.bankruptcy = true;
+            GameBoard.BackToBank(this.name);
         }
 
         // This function changes the jail status to false. It uses the observer pattern.
@@ -530,6 +535,15 @@ namespace Monopoly
                 }
             }
         }
+
+        // With this function a player can quit the game, all his properties go back to the bank.
+        public void Abandon()
+        {
+            this.state = 25;
+            this.Notify(0);
+            this.bankruptcy = true;
+            GameBoard.BackToBank(this.name);
+        }
     }
     
     // This is the concrete observer class which show differents messages in function of the status of the player.
@@ -540,122 +554,127 @@ namespace Monopoly
 
             if ((player as Player).state == 1)
             {
-                Console.WriteLine("{0} uses the function Show().\n", (player as Player).name);
+                Console.WriteLine("--> {0} uses the function Show().\n", (player as Player).name);
             }
 
             else if ((player as Player).state == 2)
             {
-                Console.WriteLine("{0} is rolling the dices.\n", (player as Player).name);
+                Console.WriteLine("--> {0} is rolling the dices.\n", (player as Player).name);
             }
 
             else if ((player as Player).state == 3)
             {
-                Console.WriteLine("{0} loses {1} by purchasing {2}.\n", (player as Player).name, ((player as Player).position as Field).price, (player as Player).position.name);
+                Console.WriteLine("--> {0} loses {1} by purchasing {2}.\n", (player as Player).name, ((player as Player).position as Field).price, (player as Player).position.name);
             }
 
             else if ((player as Player).state == 4)
             {
-                Console.WriteLine("{0} gains {1} by selling {2} to the Bank.\n", (player as Player).name, (((player as Player).position as Field).price / 2), (player as Player).position.name);
+                Console.WriteLine("--> {0} gains {1} by selling {2} to the Bank.\n", (player as Player).name, (((player as Player).position as Field).price / 2), (player as Player).position.name);
             }
 
             else if ((player as Player).state == 5)
             {
-                Console.WriteLine("{0} uses the function ShowProperties().\n", (player as Player).name);
+                Console.WriteLine("--> {0} uses the function ShowProperties().\n", (player as Player).name);
             }
 
             else if ((player as Player).state == 6)
             {
-                Console.WriteLine("{0} pays {1} to {2} for the rent {3}.\n", (player as Player).name, value, ((player as Player).position as Field).owner, (player as Player).position.name);
+                Console.WriteLine("--> {0} pays {1} to {2} for the rent {3}.\n", (player as Player).name, value, ((player as Player).position as Field).owner, (player as Player).position.name);
             }
 
             else if ((player as Player).state == 7)
             {
-                Console.WriteLine("{0} goes to jail.\n", (player as Player).name);
+                Console.WriteLine("--> {0} goes to jail.\n", (player as Player).name);
             }
 
             else if ((player as Player).state == 8)
             {
-                Console.WriteLine("{0} moves to {1}.\n", (player as Player).name, (player as Player).position.name);
+                Console.WriteLine("--> {0} moves to {1}.\n", (player as Player).name, (player as Player).position.name);
             }
 
             else if ((player as Player).state == 9)
             {
-                Console.WriteLine("{0} makes a loop and gains 200.\n", (player as Player).name);
+                Console.WriteLine("--> {0} makes a loop and gains 200.\n", (player as Player).name);
             }
 
             else if ((player as Player).state == 10)
             {
-                Console.WriteLine("{0} loses 200 by paying the income tax.\n", (player as Player).name);
+                Console.WriteLine("--> {0} loses 200 by paying the income tax.\n", (player as Player).name);
             }
 
             else if ((player as Player).state == 11)
             {
-                Console.WriteLine("{0} loses 100 by paying the luxury tax.\n", (player as Player).name);
+                Console.WriteLine("--> {0} loses 100 by paying the luxury tax.\n", (player as Player).name);
             }
 
             else if ((player as Player).state == 12)
             {
-                Console.WriteLine("{0} is on a nothing case.\n", (player as Player).name);
+                Console.WriteLine("--> {0} is on a nothing case.\n", (player as Player).name);
             }
 
             else if ((player as Player).state == 13)
             {
-                Console.WriteLine("{0} goes bankrupt, he loses!\n", (player as Player).name);
+                Console.WriteLine("--> {0} goes bankrupt, he loses!\n", (player as Player).name);
             }
 
             else if ((player as Player).state == 14)
             {
-                Console.WriteLine("{0} can go out of jail.\n", (player as Player).name);
+                Console.WriteLine("--> {0} can go out of jail.\n", (player as Player).name);
             }
 
             else if ((player as Player).state == 15)
             {
-                Console.WriteLine("{0} loses 50 by paying for going out of jail.\n", (player as Player).name);
+                Console.WriteLine("--> {0} loses 50 by paying for going out of jail.\n", (player as Player).name);
             }
 
             else if ((player as Player).state == 16)
             {
-                Console.WriteLine("{0} loses {1} by purchasing {2}.\n", (player as Player).name, ((player as Player).position as SpecialField).price, (player as Player).position.name);
+                Console.WriteLine("--> {0} loses {1} by purchasing {2}.\n", (player as Player).name, ((player as Player).position as SpecialField).price, (player as Player).position.name);
             }
 
             else if ((player as Player).state == 17)
             {
-                Console.WriteLine("{0} loses {1} by purchasing {2}.\n", (player as Player).name, ((player as Player).position as SpecialField).price, (player as Player).position.name);
+                Console.WriteLine("--> {0} loses {1} by purchasing {2}.\n", (player as Player).name, ((player as Player).position as SpecialField).price, (player as Player).position.name);
             }
             
             else if ((player as Player).state == 18)
             {
-                Console.WriteLine("{0} gains {1} by selling {2} to the Bank.\n", (player as Player).name, (((player as Player).position as Railroad).price / 2), (player as Player).position.name);
+                Console.WriteLine("--> {0} gains {1} by selling {2} to the Bank.\n", (player as Player).name, (((player as Player).position as Railroad).price / 2), (player as Player).position.name);
             }
 
             else if ((player as Player).state == 19)
             {
-                Console.WriteLine("{0} gains {1} by selling {2} to the Bank.\n", (player as Player).name, (((player as Player).position as Company).price / 2), (player as Player).position.name);
+                Console.WriteLine("--> {0} gains {1} by selling {2} to the Bank.\n", (player as Player).name, (((player as Player).position as Company).price / 2), (player as Player).position.name);
             }
 
             else if ((player as Player).state == 20)
             {
-                Console.WriteLine("{0} pays 25 to {1} for paying the rent of the railroad.\n", (player as Player).name, ((player as Player).position as Railroad).owner);
+                Console.WriteLine("--> {0} pays 25 to {1} for paying the rent of the railroad.\n", (player as Player).name, ((player as Player).position as Railroad).owner);
             }
 
             else if ((player as Player).state == 21)
             {
-                Console.WriteLine("{0} pays 50 to {1} for paying the rent of the railroad.\n", (player as Player).name, ((player as Player).position as Railroad).owner);
+                Console.WriteLine("--> {0} pays 50 to {1} for paying the rent of the railroad.\n", (player as Player).name, ((player as Player).position as Railroad).owner);
             }
 
             else if ((player as Player).state == 22)
             {
-                Console.WriteLine("{0} pays 100 to {1} for paying the rent of the railroad.\n", (player as Player).name, ((player as Player).position as Railroad).owner);
+                Console.WriteLine("--> {0} pays 100 to {1} for paying the rent of the railroad.\n", (player as Player).name, ((player as Player).position as Railroad).owner);
             }
 
             else if ((player as Player).state == 23)
             {
-                Console.WriteLine("{0} pays 200 to {1} for paying the rent of the railroad.\n", (player as Player).name, ((player as Player).position as Railroad).owner);
+                Console.WriteLine("--> {0} pays 200 to {1} for paying the rent of the railroad.\n", (player as Player).name, ((player as Player).position as Railroad).owner);
             }
 
             else if ((player as Player).state == 24)
             {
-                Console.WriteLine("{0} pays {1} to {2} for company case.\n", (player as Player).name,value, ((player as Player).position as SpecialField).owner);
+                Console.WriteLine("--> {0} pays {1} to {2} for company case.\n", (player as Player).name,value, ((player as Player).position as SpecialField).owner);
+            }
+
+            else if ((player as Player).state == 25)
+            {
+                Console.WriteLine("--> {0} abandons the game, all his propeties go back to the bank\n", (player as Player).name);
             }
         }
     }

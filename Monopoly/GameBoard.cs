@@ -142,6 +142,36 @@ namespace Monopoly
             }
         }
 
+        // With this function, all the properties of a player who goes to bankruptcy or abandons go back to the bank.
+        public static void BackToBank(string name)
+        {
+            foreach (Case cell in board)
+            {
+                if (cell.type == "Field")
+                {
+                    if ((cell as Field).owner == name)
+                    {
+                        (cell as Field).owner = "Bank";
+                    }
+                }
+                else if (cell.type == "Railroad")
+                {
+                    if ((cell as SpecialField).owner == name)
+                    {
+                        (cell as SpecialField).owner = "Bank";
+                    }
+                }
+                else if (cell.type == "Company")
+                {
+                    if ((cell as SpecialField).owner == name)
+                    {
+                        (cell as SpecialField).owner = "Bank";
+                    }
+                }
+
+            }
+        }
+
         // this function return a Case in function of the number of position.
         public Case GetCase(int position)
         {

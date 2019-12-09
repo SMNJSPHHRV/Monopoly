@@ -30,6 +30,27 @@ namespace Monopoly
             }
             return null;
         }
+
+        static int InputInt(int min, int max)
+        {           
+            int input = 0;
+            int cond = 1;
+            while(cond > 0)
+            {
+                Console.WriteLine("Input your choice");
+                input = int.Parse(Console.ReadLine());
+                if (input >= min)
+                {
+                    if (input <= max)
+                    {
+                        cond = 0;
+                    }
+                }
+                   
+            }
+            return input;
+            
+        }
         
         // The role of this function is make loop on the board. Each time a player makes a loop , he gains 200.
         static int LoopBoard(Player player, int sum)
@@ -82,29 +103,34 @@ namespace Monopoly
                 Console.WriteLine("Turn of {0}!\n", player.name);
                 PlayerMove(player, gameBoard);
                 CaseEffect(player, gameBoard, list);
-                Console.WriteLine("{0} do you want to sell ?(yes/no)\n", player.name);
-                string answer = Input("yes", "no");
-                if (answer == "yes")
+                int cond = 1;
+                while(cond > 0)
                 {
-                    player.Sell();
-                }
-                Console.WriteLine("{0} do you want to show your status?(yes/no)\n", player.name);
-                answer = Input("yes", "no");
-                if (answer == "yes")
-                {
-                    player.Show();
-                }
-                Console.WriteLine("{0} do you want to show your properties?(yes/no)\n",player.name);
-                answer = Input("yes", "no");
-                if(answer == "yes")
-                {
-                    player.ShowProperties();
-                }
-                Console.WriteLine("{0} do you want to show the board?(yes/no)\n", player.name);
-                answer = Input("yes", "no");
-                if(answer == "yes")
-                {
-                    gameBoard.ShowBoard();
+                    Console.WriteLine("What do you want to do {0}:\n", player.name);
+                    Console.WriteLine("1 - Sell \n2 - Show your status \n3 - Show your properties \n4 - Show the board\n5 - End turn\n6 - Abandon the game\n");
+                    int input = InputInt(1, 6);
+                    switch(input)
+                    {
+                        case 1:
+                            player.Sell();
+                            break;
+                        case 2:
+                            player.Show();
+                            break;
+                        case 3:
+                            player.ShowProperties();
+                            break;
+                        case 4:
+                            gameBoard.ShowBoard();
+                            break;
+                        case 5:
+                            cond = 0;
+                            break;
+                        case 6:
+                            cond = 0;
+                            player.Abandon();
+                            break;
+                    }           
                 }
                 Console.WriteLine("End of turn of {0}\n\n\n", player.name);
             }
@@ -267,16 +293,27 @@ namespace Monopoly
                 if (player.time > 2)
                 {
                     player.GoOutJail();
+                    PlayerMove(player, gameBoard);
+                    CaseEffect(player, gameBoard, list);
                 }
-                Console.WriteLine("{0} do you want to pay (one) or to roll the dices (two)? \n", player.name);
-                string answer = Input("one", "two");
-                if (answer == "one")
+                if(player.jail == true)
                 {
-                    player.PayForGoOut();
-                }
-                else
-                {
-                    RollForFree(player);
+                    Console.WriteLine("{0} do you want to pay (one) or to roll the dices (two)? \n", player.name);
+                    string answer = Input("one", "two");
+                    if (answer == "one")
+                    {
+                        player.PayForGoOut();
+                    }
+                    else
+                    {
+                        RollForFree(player);
+                    }
+
+                    if(player.jail == false)
+                    {
+                        PlayerMove(player, gameBoard);
+                        CaseEffect(player, gameBoard, list);
+                    }
                 }
             }         
         }
@@ -369,8 +406,7 @@ namespace Monopoly
         static void Main(string[] args)
         {
             // Launch of the game.
-            Game();
-            
+            Game(); 
             // Wait.
             Console.ReadKey();
 
