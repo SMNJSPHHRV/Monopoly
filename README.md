@@ -1,3 +1,3 @@
 # Monopoly
+![Game board](/Users/Simon/source/repos/Monopoly/monopolyfinal.jpg)
 
-![alt text](C:\Users\Simon\source\repos\Monopoly\monopolyfinal.jpg)
