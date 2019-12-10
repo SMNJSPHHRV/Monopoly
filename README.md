@@ -16,4 +16,13 @@ After the effect of the case, the player gets a menu where he can choose some ef
 A player who has a capital < 0 goes to bankruptcy. That means that he loses the game. The game finishs when there is only one player with the status bankruptcy equals to false.
 On the contrary to the real Monopoly, a player can't build. But the rules for the fields, the companies and the railroads are keeped.
 
+## Design Pattern
+For the implementation of this game I uses 3 design pattern which are the Singleton, the Observer and the Factory.
+I use the Singleton for checking that there is only one game board. Because the game board is composed of the cards and it's for ovoiding the multiplication of cards.
+I use the Observer to notify all the action that occur during the game. The main goal of this pattern here is to show to the players the choice, move and changes of money. This design pattern is use with the class Player, that means that the observer is used just when a player uses a method of the Player class.
+Finally I use the Factory to build the cars which composed the game board. Indeed, as we can see on the image, a board is composed with several kind of case. Some of them can be purchased and other not. It's why I use this design pattern. It's for build easily several objects that are from different class.
+
+## Thanks
+Thanks for reading my Readme. The is also some comments on my code.
+
 
