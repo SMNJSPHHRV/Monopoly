@@ -1,3 +1,3 @@
 # Monopoly
 
-<img src='monopolyfinal.JPG' width=300 height=300 align='left'>
+<img src='monopolyfinal.jpg' width=300 height=300 align='left'>
